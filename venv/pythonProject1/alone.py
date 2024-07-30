@@ -29,9 +29,11 @@ class Member:            #클래스 맴버 정의
         self.password = password                    #객체 password는 password
     def display(self):                             #display를 이용하여 회원 정보 출력(단 패스워드는 안나오게 출력)
         print(f'Name:{self.name}, ID:{self.username}')   #프린트를 username 까지만 출력)
-
     def __repr__(self):                            #문자열 객체출력
         return f'{self.name}, {self.username}'     # name,username 객체 값 반환
+def display_members():  # 함수 추가
+    for member in members:
+        member.display()  # display 메소드 호출1
 
 
 class Post():                                      # post 클래스 정의
@@ -46,23 +48,51 @@ class Post():                                      # post 클래스 정의
     def __repr__(self):
         return f'{self.title},{self.content},{self.author}'
 
+def create_member():
+    print("새로운 회원 등록")
+    name = input("이름 입력 :")
+    username = input("아이디 입력:")
+    password = input("비밀번호 입력 :")
+
+    new_member = Member(name, username, password)
+    members.append(new_member)
+
+def create_post(posts):  # 함수 추가
+    # 특정유저가 작성한 게시글의 제목을 모두 프린트 / # 특정 단어가 content에 포함된 게시글의 제목을 모두 프린트
+    for post in posts:
+        if post.author.name == '조준호':
+            print(post.title)
+
+    keyword = "특정단어"  # keyword 란 변수 선언
+    # for in / if in 으로 post.content 에 keyword("특정 단어")가 들어가 있는 것만 반복문으로 출력
+    for post in posts:
+        if keyword in post.content:
+            print(post.title)
+def create_content():
+    print("새로운 게시글 작성")
+    title = input("제목 입력 :")
+    content = input("내용 입력 :")
+    username = input("작성자명 입력 :")
+
+    new_content = Post(title, content, m1)
+    posts.append(new_content)
 
 
 # ----- 코드 실행 ------
 members = []                                                         #멤버리스트 설정
 m1 = Member('조준호', 'chojunho', 'a123')    #멤버 1을 호출할 경우 나타낼 멤버의 인스턴스설정
-members.append(m1)                                                   #members 리스트에 멤버1 추가 아래 추가된 것들도 같음.
 m2 = Member('조준', 'chojun', 'a1234')
-members.append(m2)
 m3 = Member('조', 'cho', 'a12345')
+members.append(m1)                                                  #members 리스트에 멤버1 추가 아래 추가된 것들도 같음.
+members.append(m2)
 members.append(m3)
+
 print(members)
 
-posts=[]                                              # post 리스트 설정
-p1=Post('제목1', '단어', m1)                           # 멤버 리스트와 같음.
-p2=Post('제목2', '단어', m2)
-p3=Post('제목3', '특정 단어', m3)                      #각 post는 제목, 단어, members의 인스턴스를 가짐
-
+posts = []                                              # post 리스트 설정
+p1 = Post('제목1', '단어', m1)                           # 멤버 리스트와 같음.
+p2 = Post('제목2', '단어', m2)
+p3 = Post('제목3', '특정 단어', m3)                      #각 post는 제목, 단어, members의 인스턴스를 가짐
 posts.append(p1)
 posts.append(p2)
 posts.append(p3)
@@ -81,9 +111,7 @@ posts.append(post7)
 posts.append(post8)
 posts.append(post9)
 
-# repr을 써서 리턴값을 줘보기 ===
-
-
-
-
-
+create_member()
+create_content()
+display_members()
+create_post(posts)
